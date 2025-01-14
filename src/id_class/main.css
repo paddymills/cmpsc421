@@ -1,0 +1,23 @@
+body {
+	background: grey;
+}
+
+h1#main_header {
+	color: darksalmon;
+}
+
+h2#secondary_header {
+	font-size: 8px;
+}
+
+p.yellow_text {
+	color: yellow;
+}
+
+p.purple_text {
+	color: purple;
+}
+
+p.underline_text {
+	text-decoration: underline;
+}
