@@ -2,7 +2,7 @@
 set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
 
 serve proj:
-	miniserve --index src/{{proj}}/index.html
+	miniserve --index index.html src/{{proj}}
 
 new proj:
 	mkdir src/{{proj}}
