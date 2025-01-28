@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+body {
+	min-width: 1200px;
+}
+.planet {
+	display: none;
+	width: 200px;
+	height: 200px;
+	
+	border-radius: 100%;
+}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		function printGreeting() {
+			document.getElementById("greeting").value = "JavaScript has six data types.";
+		}
+
+		function changeParagraph(color) {
+			document.getElementById("main_p").style.color = color;
+		}
+
+		function blinkText() {
+			var text = document.getElementById("text_to_blink");
+			text.style.visibility = (text.style.visibility == 'hidden' ? '' : 'hidden');
+		}
+
+		let timer;
+		function startBlink() {
+			timer = setInterval(blinkText, 500);
+		}
+
+		function stopBlink() {
+			clearInterval(timer);
+		}
+	</script>
+	<h1>Greeting Example</h1>
+	<input id="greeting" type="text">
+	<button onclick="printGreeting()">Click Me For a Greeting</button>
+
+	<h1>Paragraph example</h1>
+	<p id="main_p">It was a dark and stormy night</p>
+	<button onclick="changeParagraph('red')">Change color to red</button>
+	<button onclick="changeParagraph('green')">Change color to green</button>
+
+	<h1>Blinking Text</h1>
+	<p id="text_to_blink">This text will blink</p>
+	<button onclick="startBlink()">Blink Text</button>
+	<button onclick="stopBlink()">Stop Blink</button>
+
+	<h1>planets</h1>
+	<img class="planet" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Saturn_-_High_Resolution%2C_2004.jpg/800px-Saturn_-_High_Resolution%2C_2004.jpg?20151127105206" alt="Saturn">
+	<img class="planet" src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/l/pluto_natural_color_20150714_detail.jpg" alt="Pluto">
+	<button onclick="document.getElementsByClassName('planet')[0].style.display = 'block'">Show Saturn</button>
+	<button onclick="document.getElementsByClassName('planet')[1].style.display = 'block'">Show Pluto</button>
+</body>
+</html>
