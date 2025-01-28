@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+p#p_ex1 {
+	display: none;
+}
+</style>
+</head>
+<body>
+	<h1>Welcome to jquery</h1>
+
+	<h1>Example 1</h1>
+	<p id="p_ex1">This is a paragraph</p>
+	<button>show greeting</button>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("button").click(function() {
+				$("#p_ex1").show();
+			});
+		});
+	</script>
+</body>
+</html>
