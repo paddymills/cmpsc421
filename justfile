@@ -1,6 +1,10 @@
 
 set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
 
+[private]
+default:
+  just --list
+
 wk num:
 	git checkout -B wk{{num}} template
 
