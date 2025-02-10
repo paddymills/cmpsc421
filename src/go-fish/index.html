@@ -6,7 +6,110 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         />
-        <title>Title</title>
+        <title>Go Fish</title>
+        <style>
+            #log {
+                height: 200px;
+                overflow: auto;
+                border-radius: 5px;
+                padding: 5px;
+            }
+            .btn {
+                user-select: none;
+            }
+        </style>
     </head>
-    <body></body>
+    <body>
+        <div class="container" id="content">
+            <h1>Go Fish</h1>
+            <p>
+                The goal of the game is to collect as many sets of four as
+                possible. A set of four consists of four cards of the same rank.
+                The player with the most sets at the end of the game wins.
+            </p>
+            <ul class="white-text blue-grey darken-1" id="log"></ul>
+        </div>
+        <script>
+            var faces = [
+                "Ace",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "Jack",
+                "Queen",
+                "King",
+            ];
+            var suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
+            var deck = [];
+            var playerHand = [];
+            var computerHand = [];
+            var isPlayersTurn = true;
+
+            function log(what) {
+                var who = isPlayersTurn ? "Player" : "Computer";
+                const line = who + " " + what;
+                console.log(line);
+
+                var list = document.getElementById("log");
+                var entry = document.createElement("li");
+                entry.appendChild(document.createTextNode(line));
+                list.appendChild(entry);
+                list.scrollTop = list.scrollHeight;
+            }
+
+            function pullCard() {
+                var index = Math.floor(Math.random() * deck.length);
+                return deck.splice(index, 1)[0];
+            }
+
+            function startGame() {
+                for (var i = 0; i < suits.length; i++) {
+                    for (var j = 0; j < faces.length; j++) {
+                        var card = {
+                            face: faces[j],
+                            suit: suits[i],
+                        };
+                        deck.push(card);
+                    }
+                }
+
+                for (var i = 0; i < 7; i++) {
+                    playerHand.push(pullCard());
+                    computerHand.push(pullCard());
+                }
+            }
+
+            function getCardsFromOpponentHand(face) {
+                var playersHand = isPlayersTurn ? playerHand : computerHand;
+                var opponentsHand = isPlayersTurn ? computerHand : playerHand;
+
+                var found = false;
+                for (var i = 0; i < opponentsHand.length; i++) {
+                    if (opponentsHand[i].face === face) {
+                        playersHand.push(opponentsHand[i]);
+                        opponentsHand.splice(i, 1);
+                        found = true;
+                        i--;
+                    }
+                }
+
+                if (!found) {
+                    log("Go Fish!");
+                    if (deck.length > 0) {
+                        playersHand.push(pullCard());
+                    } else {
+                        log("No more cards in the deck!");
+                    }
+                    isPlayersTurn = !isPlayersTurn;
+                }
+            }
+        </script>
+    </body>
 </html>
