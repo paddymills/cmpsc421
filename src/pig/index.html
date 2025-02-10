@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+        <title>Pig</title>
+        <style>
+            #log {
+                height: 200px;
+                overflow: auto;
+                border-radius: 5px;
+                padding: 5px;
+            }
+            .btn {
+                user-select: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" id="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Human</td>
+                        <td id="player-score">0</td>
+                    </tr>
+                    <tr>
+                        <td>Computer</td>
+                        <td id="computer-score">0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h1>The Game of Pig</h1>
+            <p>
+                Players take turns rolling the dice. Each roll accumulates the
+                turn's score. If a 1 is rolled, the turn ends and no score is
+                added. Ending one's turn adds the turn counter to the player's
+                score. First one to 100 wins.
+            </p>
+            <p id="turn-score">Turn Score: 0</p>
+            <p id="dice-roll">Last Roll:</p>
+            <div id="player-controls">
+                <a class="btn" id="btn-roll">Roll</a>
+                <a class="btn" id="btn-pass">End Turn</a>
+            </div>
+            <ul class="white-text blue-grey darken-1" id="log"></ul>
+        </div>
+    </body>
+    <script>
+        var player = 0;
+        var computer = 0;
+        var isPlayersTurn = true;
+        var turnScore = 0;
+        var diceValue = 0;
+        var history = "";
+
+        function log(what) {
+            var who = isPlayersTurn ? "Player" : "Computer";
+            const line = who + " " + what;
+            console.log(line);
+
+            var list = document.getElementById("log");
+            var entry = document.createElement("li");
+            entry.appendChild(document.createTextNode(line));
+            list.appendChild(entry);
+            list.scrollTop = list.scrollHeight;
+        }
+
+        function rollDice() {
+            // roll a random number between 1 and 6 inclusive
+            // if 1, end turn and set turn score to 0
+            // else, add to turn score
+            // return true if not 1 (continue turn), false if 1 (end turn)
+
+            diceValue = Math.floor(Math.random() * 6) + 1;
+            document.getElementById("dice-roll").innerText =
+                "Last Roll: " + diceValue;
+            if (diceValue === 1) {
+                log("rolled a 1, ending turn");
+                turnScore = 0;
+                isPlayersTurn = !isPlayersTurn;
+                document.getElementById("turn-score").innerText =
+                    "Turn Score: 0";
+
+                endTurn();
+                return false;
+            }
+
+            log("rolled a " + diceValue);
+            turnScore += diceValue;
+            document.getElementById("turn-score").innerText =
+                "Turn Score: " + turnScore;
+
+            if (isPlayersTurn && player + turnScore >= 100) {
+                alert("Player wins!");
+            } else if (!isPlayersTurn && computer + turnScore >= 100) {
+                alert("Computer wins!");
+            }
+
+            return true;
+        }
+
+        function endTurn() {
+            log("ended turn");
+            if (isPlayersTurn) {
+                player += turnScore;
+            } else {
+                computer += turnScore;
+            }
+            turnScore = 0;
+            isPlayersTurn = !isPlayersTurn;
+            updateScores();
+
+            if (!isPlayersTurn) {
+                computerTurn();
+            }
+        }
+
+        function playerTurn() {
+            if (player < 100) {
+                rollDice();
+            }
+        }
+
+        function computerTurn() {
+            while (rollDice()) {
+                // roll again or pass
+                if (Math.floor(Math.random() * 2) == 1) {
+                    endTurn();
+                    break;
+                }
+            }
+        }
+
+        function updateScores() {
+            document.getElementById("player-score").innerText = player;
+            document.getElementById("computer-score").innerText = computer;
+        }
+
+        document
+            .getElementById("btn-roll")
+            .addEventListener("click", playerTurn);
+        document.getElementById("btn-pass").addEventListener("click", endTurn);
+    </script>
+</html>
