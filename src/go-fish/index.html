@@ -27,6 +27,25 @@
                 possible. A set of four consists of four cards of the same rank.
                 The player with the most sets at the end of the game wins.
             </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Sets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Human</td>
+                        <td id="player-sets">0</td>
+                    </tr>
+                    <tr>
+                        <td>Computer</td>
+                        <td id="computer-sets">0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="collection"></div>
             <ul class="white-text blue-grey darken-1" id="log"></ul>
         </div>
         <script>
@@ -50,6 +69,8 @@
             var deck = [];
             var playerHand = [];
             var computerHand = [];
+            var playerSets = 0;
+            var computerSets = 0;
             var isPlayersTurn = true;
 
             function log(what) {
@@ -63,6 +84,30 @@
                 list.appendChild(entry);
                 list.scrollTop = list.scrollHeight;
             }
+
+            function cardCallback(event) {
+                if (isPlayersTurn) {
+                    const face = event.target.innerText.split(" ")[0];
+                    getCardsFromOpponentHand(face, computerHand, playerHand);
+                }
+            }
+
+            function renderPlayerHand() {
+                var collection = document.querySelector(".collection");
+                collection.innerHTML = "";
+
+                // render player hand
+                for (var i = 0; i < playerHand.length; i++) {
+                    var card = playerHand[i];
+                    var cardElement = document.createElement("a");
+                    cardElement.className = "collection-item";
+                    // cardElement.id = `card-${card.face}-${card.suit}`;
+                    cardElement.innerText = `${card.face} of ${card.suit}`;
+                    cardElement.addEventListener("click", cardCallback);
+                    collection.appendChild(cardElement);
+                }
+            }
+
 
             function pullCard() {
                 var index = Math.floor(Math.random() * deck.length);
@@ -81,35 +126,115 @@
                 }
 
                 for (var i = 0; i < 7; i++) {
-                    playerHand.push(pullCard());
                     computerHand.push(pullCard());
+                    playerHand.push(pullCard());
                 }
+
+                renderPlayerHand();
             }
 
-            function getCardsFromOpponentHand(face) {
-                var playersHand = isPlayersTurn ? playerHand : computerHand;
-                var opponentsHand = isPlayersTurn ? computerHand : playerHand;
+            function getCardsFromOpponentHand(face, fromHand, toHand) {
+                log(`asked for ${face}`);
 
-                var found = false;
-                for (var i = 0; i < opponentsHand.length; i++) {
-                    if (opponentsHand[i].face === face) {
-                        playersHand.push(opponentsHand[i]);
-                        opponentsHand.splice(i, 1);
-                        found = true;
+                // check if the opponent has the card
+                var found = 0;
+                for (var i = 0; i <fromHand.length; i++) {
+                    if (fromHand[i].face === face) {
+                        toHand.push(fromHand[i]);
+                        fromHand.splice(i, 1);
+                        found++;
                         i--;
                     }
                 }
 
-                if (!found) {
+                if (found > 0) {
+                    log(`got ${found} ${face}(s)`);
+                } else {
                     log("Go Fish!");
                     if (deck.length > 0) {
-                        playersHand.push(pullCard());
+                        const card = pullCard();
+                        log(`drew a ${card.face} of ${card.suit}`);
+                        toHand.push(card);
                     } else {
                         log("No more cards in the deck!");
                     }
                     isPlayersTurn = !isPlayersTurn;
                 }
+
+                validateSets();
+                renderPlayerHand();
+                if (!isPlayersTurn) {
+                    computerTurn();
+                }
             }
+
+            function validateSets() {
+                // sort hands
+                playerHand.sort((a, b) => a.face.localeCompare(b.face));
+                computerHand.sort((a, b) => a.face.localeCompare(b.face));
+
+                // check for sets with player
+                var face = playerHand[0].face;
+                var count = 1;
+                for (var i = 1; i < playerHand.length; i++) {
+                    if (playerHand[i].face === face) {
+                        count++;
+                    } else {
+                        face = playerHand[i].face;
+                        count = 1;
+                    }
+
+                    if (count === 4) {
+                        log(`Player got a set of ${face}s!`);
+                        playerSets++;
+                        playerHand.splice(i - 3, 4);
+                        i -= 4;
+                    }
+                }
+
+                // check for sets with computer
+                face = computerHand[0].face;
+                count = 1;
+                for (var i = 1; i < computerHand.length; i++) {
+                    if (computerHand[i].face === face) {
+                        count++;
+                    } else {
+                        face = computerHand[i].face;
+                        count = 1;
+                    }
+
+                    if (count === 4) {
+                        log(`Computer got a set of ${face}s!`);
+                        computerSets++;
+                        computerHand.splice(i - 3, 4);
+                        i -= 4;
+                    }
+                }
+
+                // update results
+                document.getElementById("player-sets").innerText = playerSets;
+                document.getElementById("computer-sets").innerText = computerSets;
+
+                // check end of game
+                if (deck.length === 0 || playerHand.length === 0 || computerHand.length === 0) {
+                    if (playerSets > computerSets) {
+                        alert("Player wins!");
+                    } else if (computerSets > playerSets) {
+                        alert("Computer wins!");
+                    } else {
+                        alert("It's a tie!");
+                    }
+                }
+            }
+
+            function computerTurn() {
+                var face = faces[Math.floor(Math.random() * faces.length)];
+                getCardsFromOpponentHand(face, playerHand, computerHand);
+            }
+
+            window.onload = () => {
+                startGame();
+            };
         </script>
     </body>
 </html>
