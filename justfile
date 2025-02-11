@@ -1,6 +1,8 @@
 
 set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
 
+branch := `git branch --show-current`
+
 [private]
 default:
   just --list
@@ -14,3 +16,6 @@ serve proj:
 new proj:
 	mkdir src/{{proj}}
 	cp src/template.html src/{{proj}}/index.html
+
+zip:
+    zip --junk-paths PatrickMiller_{{branch}}.zip src/* -x src/template.html
