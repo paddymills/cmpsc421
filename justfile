@@ -17,5 +17,7 @@ new proj:
 	mkdir src/{{proj}}
 	cp src/template.html src/{{proj}}/index.html
 
+[working-directory: 'src']
 zip:
-    zip --junk-paths PatrickMiller_{{branch}}.zip src/* -x src/template.html
+    ls -d */ | zip -r@ PatrickMiller_{{branch}}.zip
+    mv PatrickMiller_{{branch}}.zip ..
