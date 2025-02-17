@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.2.1/dist/js/materialize.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.2.1/dist/css/materialize.min.css">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!-- Material Symbols - Outlined Set -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <!-- Material Symbols - Rounded Set -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet"/>
+    <!-- Material Symbols - Sharp Set -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet"/>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<div class="container" id="content"></div>
+
+<script>
+
+    // make the API call
+    let url = './data/data.json';
+    $.get(url, function (data) {
+        console.log(data)
+        data.forEach(d => {
+            let template = `<div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+        <span class="card-title">${d.Name}</span>
+        <p>${d.DateCreated}</p>
+    </div>
+</div>`;
+            console.log(template)
+            $("div#content").append(template)
+        })
+
+    })
+
+
+    // sync
+    console.log(1)
+
+    // sync
+    console.log(2)
+
+    // sync
+    console.log(3)
+
+    // sync
+    console.log(4)
+
+    // sync
+    console.log(5)
+
+
+</script>
+
+</body>
+</html>

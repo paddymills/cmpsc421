@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.2.0/dist/js/materialize.min.js"></script>
+
+    <!--    add jquery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+
+    <style>
+        div.box {
+            height: 200px;
+        }
+
+        p.box-p {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div class="container yellow">
+    <h5 class="center-align">Centered</h5>
+    <h5 class="left-align">Left-aligned</h5>
+    <h5 class="right-align">right-aligned</h5>
+</div>
+
+<div class="box container grey lighten-2 valign-wrapper center-align">
+    <p class="box-p center-align">Vertical Alignment</p>
+</div>
+
+<div id="truncate_box" class="truncate container green lighten-1 valign-wrapper">
+    <q>According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too
+        small to get its fat little body off the ground. The bee, of course, flies anyways. Because bees don't care what
+        humans think is impossible.</q>
+</div>
+
+<div class="container">
+    <button id="truncate_button">click to on/off truncate</button>
+</div>
+
+<script>
+    $(document).ready(() => {
+        $("button#truncate_button").click(() => {
+            $("div#truncate_box").toggleClass("truncate");
+        });
+    });
+</script>
+
+</body>
+</html>
