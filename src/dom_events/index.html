@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            min-height: 1200px;
+        }
+
+        input#greeting {
+            width: 300px;
+            height: 30px;
+            font-size: 20px;
+        }
+
+        img.planet {
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 50%;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<script>
+    function printGreeting() {
+        const inputBox = document.getElementById('greeting');
+        inputBox.value = 'JavaScript has six data types!';
+    }
+
+    function changeParagraph(color) {
+        const paragraph = document.getElementById('main_paragraph');
+        paragraph.style.backgroundColor = color;
+    }
+
+    function blinkText() {
+        const text = document.getElementById('text_to_blink');
+        text.style.color = text.style.color === 'red' ? 'black' : 'red';
+    }
+
+    let timer;
+
+    function startBlinker() {
+        const p = document.getElementById('text_to_blink');
+        p.innerHTML = 'This text is blinking';
+        timer = setInterval(blinkText, 500);    // every 1/2 second
+    }
+
+    function stopBlinker() {
+        const p = document.getElementById('text_to_blink');
+        p.innerHTML = 'This text is not blinking';
+        clearInterval(timer);
+    }
+
+
+</script>
+
+<h1>Greeting Example</h1>
+<input readonly="readonly" id="greeting" type="text">
+<button onclick="printGreeting()">Click Me For a Greeting</button>
+
+<h1>Paragraph Example</h1>
+<p id="main_paragraph">It was a dark and stormy night...</p>
+<button onclick="changeParagraph('pink')">Click to highlight pink</button>
+<button onclick="changeParagraph('yellow')">Click to highlight yellow</button>
+
+<div onclick="alert('you clicked me!')"
+     style="width: 100px; height: 100px; display: block; background-color: lightpink; color: blue">
+    Click Me!
+</div>
+
+<h1>Blinking Text</h1>
+<p id="text_to_blink">This text is not blinking</p>
+<button onclick="startBlinker()">Click to make text blink</button>
+<button onclick="stopBlinker()">Click to stop blinking text</button>
+
+<h1>Planets</h1>
+<button onclick="document.getElementById('saturn').style.visibility = 'visible'">show saturn</button>
+<button onclick="document.getElementById('pluto').style.visibility = 'visible'">show pluto</button>
+<img id="saturn" class="planet" src="https://th.bing.com/th/id/OIP.r-7nbqKRZ7wuDybxDfou6AHaE9?rs=1&pid=ImgDetMain"
+     alt="saturn">
+<img id="pluto" class="planet"
+     src="https://external-preview.redd.it/asp67UkOWb_HsDIkka29Jps4UwjBAKl-6A47Vmv9pH4.jpg?auto=webp&s=ee12a00492ec178d0e9db9a5ed419ca65485d062"
+     alt="pluto">
+</body>
+</html>

@@ -1,41 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<style type="text/css">
-#main_img {
-	width: 50%;
-	border: 1px solid black;
-}
-h1#main_header {
-	display: none;
-}
-	</style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h1#main_header {
+            display: none;
+        }
+        img#main_image {
+            /*width: 200px;*/
+            height: 200px;
+            border-radius: 50%;
+        }
+
+    </style>
 </head>
 <body>
-	<h1 id="main_header">This is a header</h1>
-	<img id="main_img" src="https://imgs.xkcd.com/comics/devotion_to_duty.png" alt="sysadmin">
-	<button onclick="buttonClick()">Click me</button>
-	<script type="text/javascript">
-		function loadPage() {
-			// alert("loaded");
-			let img = document.getElementById("main_img");
-			img.alt = "danger";
-			img.src = "https://imgs.xkcd.com/comics/dangers.png";
+<h1 id="main_header"> This is a header</h1>
+<img id="main_image" src="https://i.ytimg.com/vi/Sl4U6EZh4cU/maxresdefault.jpg" alt="sam">
+<button onclick="buttonClick()">Click Me</button>
 
-			let header = document.getElementById("main_header");
-			header.style.display = "block";
-			header.textContent = "Welcome to the page";
+<script>
+    function buttonClick() {
+        console.log('You clicked the button');
+    }
+    function loadPage() {
+        // alert('it loaded');
 
-			document.body.style.backgroundColor = "lightblue";
-		}
+        // get the image
+        let image = document.getElementById('main_image');
+        // console.log(image)
+        image.alt = 'greg';
+        image.src = 'https://thelegit.org/wp-content/uploads/2021/01/download-1-1024x979.png';
+        // console.log(image)
 
-		const buttonClick = () => {
-			alert("Button clicked");
-		}
+        // get the header
+        let header = document.getElementById('main_header');
+        // change the color to white
+        header.style.color = 'white';
+        header.style.display = 'block';
 
-		setTimeout(loadPage, 2000);
-	</script>
+        // get the body
+        let body = document.body;
+        body.style.backgroundColor = 'black';
+    }
+    window.setTimeout(loadPage, 3000);  // 3 seconds after the page loads
+
+</script>
 </body>
 </html>
