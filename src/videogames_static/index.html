@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Videogames</title>
+        <!-- Compiled and minified CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- Material Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Material Symbols - Outlined Set -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet"
+        />
+        <!-- Material Symbols - Rounded Set -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
+            rel="stylesheet"
+        />
+        <!-- Material Symbols - Sharp Set -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+        />
+        <style>
+            body {
+                min-height: 1000px;
+                padding-bottom: 200px;
+            }
+            img#logo {
+                width: 650px;
+                display: block;
+                margin: 0 auto;
+                border: 2px solid green;
+            }
+
+            form {
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Videogames db</h2>
+            <img
+                id="logo"
+                src="https://images5.alphacoders.com/519/519870.jpg"
+                alt="mario kart"
+            />
+            <form>
+                <!-- title -->
+                <label for="title">Title:</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="e.g. Witcher III"
+                />
+
+                <!-- year -->
+                <label for="year">Year:</label>
+                <input
+                    type="number"
+                    id="year"
+                    name="year"
+                    placeholder="e.g. 2015"
+                />
+
+                <!-- publisher -->
+                <label for="publisher">Publisher:</label>
+                <input
+                    type="text"
+                    id="publisher"
+                    name="publisher"
+                    placeholder="e.g. Warner Brothers"
+                />
+
+                <!-- developer -->
+                <label for="developer">Developer:</label>
+                <input
+                    type="text"
+                    id="developer"
+                    name="developer"
+                    placeholder="e.g. CD Project Red"
+                />
+
+                <button class="btn-large blue white-text add" type="submit">
+                    Submit
+                </button>
+            </form>
+
+            <h4>Data</h4>
+            <ul class="collection">
+                <li class="collection-item">
+                    <i
+                        class="material-icons secondary-content red-text"
+                        title="delete"
+                        >delete</i
+                    >
+                    <i
+                        class="material-icons secondary-content blue-text"
+                        title="edit"
+                        >edit</i
+                    >
+                    <span class="title">Red Dead Redemption</span>
+                    <p class="grey-text">Rockstar (2009)</p>
+                </li>
+                <li class="collection-item">
+                    <i
+                        class="material-icons secondary-content red-text"
+                        title="delete"
+                        >delete</i
+                    >
+                    <i
+                        class="material-icons secondary-content blue-text"
+                        title="edit"
+                        >edit</i
+                    >
+                    <span class="title">Call of Duty</span>
+                    <p class="grey-text">Activision (2003)</p>
+                </li>
+                <li class="collection-item">
+                    <i
+                        class="material-icons secondary-content red-text"
+                        title="delete"
+                        >delete</i
+                    >
+                    <i
+                        class="material-icons secondary-content blue-text"
+                        title="edit"
+                        >edit</i
+                    >
+                    <span class="title">Fortnite</span>
+                    <p class="grey-text">Epic Games (2017)</p>
+                </li>
+            </ul>
+        </div>
+        <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/toastify-js"
+        ></script>
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+        <script src="app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    </body>
+</html>
