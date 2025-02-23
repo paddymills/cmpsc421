@@ -1,166 +1,137 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Videogames</title>
-        <!-- Compiled and minified CSS -->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-        />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Games DB</title>
 
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-        <!-- Material Icons -->
-        <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-        />
-        <!-- Material Symbols - Outlined Set -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet"
-        />
-        <!-- Material Symbols - Rounded Set -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
-            rel="stylesheet"
-        />
-        <!-- Material Symbols - Sharp Set -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-        />
-        <style>
-            body {
-                min-height: 1000px;
-                padding-bottom: 200px;
-            }
-            img#logo {
-                width: 650px;
-                display: block;
-                margin: 0 auto;
-                border: 2px solid green;
-            }
+    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.2.1/dist/js/materialize.min.js" integrity="sha256-PJJZSjhhE//mITZJf3mCMixskOuajAyHKctYLvsGNMY=" crossorigin="anonymous"></script>
 
-            form {
-                padding: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Videogames db</h2>
-            <img
-                id="logo"
-                src="https://images5.alphacoders.com/519/519870.jpg"
-                alt="mario kart"
-            />
-            <form>
-                <!-- title -->
-                <label for="title">Title:</label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    placeholder="e.g. Witcher III"
-                />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.2.1/dist/css/materialize.min.css" integrity="sha256-FyggsEnDaIf/m3jLI9zPWHEttxfcEc9QPF+9Iqjr7eE=" crossorigin="anonymous">
 
-                <!-- year -->
-                <label for="year">Year:</label>
-                <input
-                    type="number"
-                    id="year"
-                    name="year"
-                    placeholder="e.g. 2015"
-                />
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Material Symbols - Outlined Set -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!-- Material Symbols - Rounded Set -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+    <!-- Material Symbols - Sharp Set -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet" />
 
-                <!-- publisher -->
-                <label for="publisher">Publisher:</label>
-                <input
-                    type="text"
-                    id="publisher"
-                    name="publisher"
-                    placeholder="e.g. Warner Brothers"
-                />
+    <style>
 
-                <!-- developer -->
-                <label for="developer">Developer:</label>
-                <input
-                    type="text"
-                    id="developer"
-                    name="developer"
-                    placeholder="e.g. CD Project Red"
-                />
+         body {
+             min-height: 1000px;
+             padding-bottom: 200px;
+         }
 
-                <button class="btn-large blue white-text add" type="submit">
-                    Submit
-                </button>
-            </form>
+         img#logo {
+             width: 650px;
+             display: block;
+             margin: 0 auto 0 auto;
+             border: 2px solid green;
+         }
 
-            <h4>Data</h4>
-            <ul class="collection">
-                <li class="collection-item">
-                    <i
-                        class="material-icons secondary-content red-text"
-                        title="delete"
-                        >delete</i
-                    >
-                    <i
-                        class="material-icons secondary-content blue-text"
-                        title="edit"
-                        >edit</i
-                    >
-                    <span class="title">Red Dead Redemption</span>
-                    <p class="grey-text">Rockstar (2009)</p>
-                </li>
-                <li class="collection-item">
-                    <i
-                        class="material-icons secondary-content red-text"
-                        title="delete"
-                        >delete</i
-                    >
-                    <i
-                        class="material-icons secondary-content blue-text"
-                        title="edit"
-                        >edit</i
-                    >
-                    <span class="title">Call of Duty</span>
-                    <p class="grey-text">Activision (2003)</p>
-                </li>
-                <li class="collection-item">
-                    <i
-                        class="material-icons secondary-content red-text"
-                        title="delete"
-                        >delete</i
-                    >
-                    <i
-                        class="material-icons secondary-content blue-text"
-                        title="edit"
-                        >edit</i
-                    >
-                    <span class="title">Fortnite</span>
-                    <p class="grey-text">Epic Games (2017)</p>
-                </li>
-            </ul>
-        </div>
-        <script
-            type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/toastify-js"
-        ></script>
-        <script
-            src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-        <script src="app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
-    </body>
+         ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+             color: pink;
+         }
+         ::-moz-placeholder { /* Firefox 19+ */
+             color: pink;
+         }
+         :-ms-input-placeholder { /* IE 10+ */
+             color: pink;
+         }
+         :-moz-placeholder { /* Firefox 18- */
+             color: pink;
+         }
+
+         i:hover {
+             cursor: pointer;
+         }
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Video Games DB</h2>
+    <img id="logo" src="https://cdn.wallpapersafari.com/20/59/z1JNkm.jpg" alt="mario kart">
+
+    <h4>Add a new game to the database</h4>
+    <form>
+
+        <label for="vg_title">Video Game Title: </label>
+        <input type="text" id="vg_title" placeholder="e.g. Witcher 3">
+        <label for="vg_year">Video Game Year: </label>
+        <input type="text" id="vg_year" placeholder="e.g. 2015">
+        <label for="vg_publisher">Video Game Publisher: </label>
+        <input type="text" id="vg_publisher" placeholder="e.g. Warner Bros.">
+        <label for="vg_developer">Video Game Developer: </label>
+        <input type="text" id="vg_developer" placeholder="e.g. CD Project Red">
+        <button type="button" class="btn-large blue white-text">Add</button>
+    </form>
+
+    <h4>View the data</h4>
+    <ul class="collection">
+        <li class="collection-item">
+            <i class="material-icons secondary-content red-text" title="click me to delete">delete</i>
+            <i class="material-icons secondary-content blue-text" title="click me to edit">edit</i>
+            <span class="title">Red Dead Redemption</span>
+            <p class="grey-text">Rockstar (2009)</p>
+        </li>
+        <li class="collection-item">
+            <i class="material-icons secondary-content red-text" title="click me to delete">delete</i>
+            <i class="material-icons secondary-content blue-text" title="click me to edit">edit</i>
+            <span class="title">Call of Duty Black Ops 6</span>
+            <p class="grey-text">Activision (2024)</p>
+        </li>
+        <li class="collection-item">
+            <i class="material-icons secondary-content red-text" title="click me to delete">delete</i>
+            <i class="material-icons secondary-content blue-text" title="click me to edit">edit</i>
+            <span class="title">Fortnite</span>
+            <p class="grey-text">Epic Games (2017)</p>
+        </li>
+
+
+    </ul>
+
+
+
+
+</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+
+<script>
+
+    $(document).ready(() => {
+
+        $('button').click(() => {
+            Toastify({
+                text: "This is a toast",
+                duration: 3000,
+                destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "left", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function(){} // Callback after click
+            }).showToast();
+        })
+
+    });
+
+</script>
+
+</body>
 </html>
