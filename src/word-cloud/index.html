@@ -2,15 +2,48 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Title</title>
+        <title>Word Cloud</title>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         />
+        <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <script type="module">
-            import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-        </script>
+        <div class="container">
+            <h1>Word Cloud</h1>
+            <form id="words-form">
+                <label for="word-input">Word</label>
+                <input
+                    type="text"
+                    id="word-input"
+                    name="word-input"
+                    placeholder="Enter a word"
+                />
+                <button
+                    type="button"
+                    id="generate-btn"
+                    class="btn-large blue white-text"
+                >
+                    Generate
+                </button>
+            </form>
+            <div id="word-cloud"></div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/toastify-js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+            integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k="
+            crossorigin="anonymous"
+        ></script>
+        <script src="app.js" type="text/javascript"></script>
     </body>
 </html>
