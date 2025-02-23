@@ -2,15 +2,26 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Title</title>
+        <title>Population</title>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         />
     </head>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h1>Population</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div id="chart"><p>fetching data...</p></div>
+            </div>
+        </div>
+    </div>
     <body>
-        <script type="module">
-            import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+        <script src="app.js"></script>
     </body>
 </html>
