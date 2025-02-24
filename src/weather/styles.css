@@ -1,0 +1,15 @@
+#weather-data {
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px 30px;
+}
+
+#weather-temp {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.forecast-day {
+    border-radius: 5px;
+    margin: 3px;
+}
