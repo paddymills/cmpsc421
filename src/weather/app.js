@@ -1,5 +1,8 @@
 const key = "jhrg50qHxEn4Ou1VQq4Tb3IrnwC3WM5x";
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var selectedDayIndex = 0;
+var dailyForecasts = [];
+var hourlyForecasts = [];
 
 window.onload = () => {
   let zip = document.getElementById("zip-input");
@@ -21,7 +24,7 @@ window.onload = () => {
     });
 
   // for testing
-  // getWeather("17022");
+  getWeather("17022");
 };
 
 async function getWeather(loc) {
@@ -63,25 +66,102 @@ async function getWeather(loc) {
   const forecastData = await forecast.json();
   console.log(forecastData);
 
+  // save daily forecasts
+  dailyForecasts = forecastData.properties.periods;
+  renderDailyForcasts();
+
+  const hourlyForecast = await fetch(forecastConfig.properties.forecastHourly);
+  const hourlyForecastData = await hourlyForecast.json();
+  console.log(hourlyForecastData);
+
+  // save hourly forecasts
+  hourlyForecasts = hourlyForecastData.properties.periods;
+  renderHourlyForcasts();
+
+  setCurrentWeather(hourlyForecastData.properties.periods[0]);
+}
+
+function renderDailyForcasts() {
   // show weather data for each day
   for (let i = 0; i < 10; i++) {
-    const period = forecastData.properties.periods[i];
+    const period = dailyForecasts[i];
     const date = new Date(period.startTime);
     document.getElementById(`date-${i}`).textContent =
       `${days[date.getDay()]} ${date.getDate()}`;
     document.getElementById(`icon-${i}`).src = period.icon;
     document.getElementById(`temp-${i}`).textContent =
       `${period.temperature}°${period.temperatureUnit}`;
+
+    let container = document.getElementById(`daily-${i}`);
+    container.classList.remove("white");
+    container.classList.remove("blue-grey");
+    container.classList.add(selectedDayIndex === i ? "white" : "blue-grey");
+
+    container.addEventListener("click", (e) => {
+      selectedDayIndex = i;
+      renderDailyForcasts();
+    });
   }
 
-  const hourlyForecast = await fetch(forecastConfig.properties.forecastHourly);
-  const hourlyForecastData = await hourlyForecast.json();
-  console.log(hourlyForecastData);
-  setCurrentWeather(hourlyForecastData.properties.periods[0]);
+  renderHourlyForcasts();
+}
+
+function renderHourlyForcasts() {
+  const width = 800;
+  const height = 200;
+  const marginTop = 20;
+  const marginRight = 20;
+  const marginBottom = 20;
+  const marginLeft = 20;
+
+  d3.select("#hourly-forecast").selectAll("*").remove();
+
+  const date = dailyForecasts[0].startTime.substring(0, 10);
+  const hourly = hourlyForecasts.filter(
+    (forecast) => forecast.startTime.substring(0, 10) === date,
+  );
+
+  const x = d3.scaleUtc(
+    d3.extent(hourly, (x) => new Date(x.startTime)),
+    [marginLeft, width - marginRight],
+  );
+  const y = d3.scaleLinear(
+    [0, d3.max(hourly, (d) => d.temperature)],
+    [height - marginBottom, marginTop],
+  );
+  const svg = d3
+    .select("#hourly-forecast")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const xAxis = d3.axisBottom(x);
+  const yAxis = d3.axisLeft(y);
+
+  svg
+    .append("g")
+    .attr("transform", `translate(0, ${height - marginBottom})`)
+    .call(xAxis);
+  svg.append("g").attr("transform", `translate(${marginLeft}, 0)`).call(yAxis);
+
+  const line = d3
+    .line()
+    .x((d) => x(new Date(d.startTime).getHours()))
+    .y((d) => y(d.temperature));
+
+  svg
+    .append("path")
+    .datum(hourly)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 1.5)
+    .attr("d", line);
+
+  return svg.node();
 }
 
 function setCurrentWeather(currentWeather) {
-  console.log(currentWeather);
+  // console.log(currentWeather);
   document.getElementById("weather-temp").textContent =
     `${currentWeather.temperature}°${currentWeather.temperatureUnit}`;
   document.getElementById("weather-icon").src = currentWeather.icon;
