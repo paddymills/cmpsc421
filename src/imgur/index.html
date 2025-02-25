@@ -7,8 +7,27 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
     </head>
     <body>
+        <div class="container">
+            <h1>new Imgur</h1>
+            <p class="red-text">sorry for the nsfw</p>
+            <div id="cards" class="row"></div>
+        </div>
+        <dialog id="comments">
+            <ul
+                id="comments-ls"
+                class="collapsible"
+                style="max-height: 80vh; overflow: auto"
+            ></ul>
+            <form method="dialog">
+                <button>Close</button>
+            </form>
+        </dialog>
         <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
         <script src="app.js"></script>
     </body>
