@@ -1,12 +1,18 @@
 window.onload = () => {
-  let word = document.getElementById("word-input");
   document
     .getElementById("generate-btn")
     .addEventListener("click", async (e) => {
-      let term = word.value;
+      let term = document.getElementById("word-input").value;
       console.log("search term:", term);
       await generateWordCloud(term);
     });
+
+  if (window.location.search === "?env=dev") {
+    console.log("Development environment detected");
+
+    document.getElementById("word-input").value = "example";
+    document.getElementById("generate-btn").click();
+  }
 };
 
 async function fetchWordCloudData(term) {
@@ -32,73 +38,112 @@ async function generateWordCloud(term) {
     // Generate word cloud using data
     console.log(data);
 
-    let dest = document.getElementById("word-cloud");
-    const cloud = WordCloud(data, {
-      size: (g) => g.score,
-      word: (d) => d.word,
-    });
+    const width = 800;
+    const height = 600;
+
+    const words = data.map((d) => ({ text: d.word, size: d.score }));
+
+    var cTemp = document.createElement("canvas"),
+      ctx = cTemp.getContext("2d");
+    ctx.font = "100px sans-serif";
+    var fRatio = Math.min(width, height) / ctx.measureText(words[0].text).width,
+      fontScale = d3.scale
+        .linear()
+        .domain([
+          d3.min(words, function (d) {
+            return d.size;
+          }),
+          d3.max(words, function (d) {
+            return d.size;
+          }),
+        ])
+        //.range([20,120]),
+        .range([20, (100 * fRatio) / 2]), // tbc
+      fill = d3.scale.category20();
+
+    d3.layout
+      .cloud()
+      .size([width, height])
+      .words(data.map((d) => ({ text: d.word, size: d.score })))
+      //.padding(2) // controls
+      .rotate(function () {
+        return ~~(Math.random() * 2) * 90;
+      })
+      .font("sans-serif")
+      .fontSize(function (d) {
+        return fontScale(d.size);
+      })
+      .on("end", draw)
+      .start();
   }
 }
 
-// from https://observablehq.com/@d3/word-cloud
-function WordCloud(
-  text,
-  {
-    size = (group) => group.length, // Given a grouping of words, returns the size factor for that word
-    word = (d) => d, // Given an item of the data array, returns the word
-    marginTop = 0, // top margin, in pixels
-    marginRight = 0, // right margin, in pixels
-    marginBottom = 0, // bottom margin, in pixels
-    marginLeft = 0, // left margin, in pixels
-    width = 640, // outer width, in pixels
-    height = 400, // outer height, in pixels
-    maxWords = 250, // maximum number of words to extract from the text
-    fontFamily = "sans-serif", // font family
-    fontScale = 15, // base font size
-    fill = null, // text color, can be a constant or a function of the word
-    padding = 0, // amount of padding between the words (in pixels)
-    rotate = 0, // a constant or function to rotate the words
-    invalidation, // when this promise resolves, stop the simulation
-  } = {},
-) {
-  const words =
-    typeof text === "string" ? text.split(/\W+/g) : Array.from(text);
+function draw(words, bounds) {
+  cWidth = 800;
+  cHeight = 600;
 
-  const data = d3
-    .rollups(words, size, (w) => w)
-    .sort(([, a], [, b]) => d3.descending(a, b))
-    .slice(0, maxWords)
-    .map(([key, size]) => ({ text: word(key), size }));
+  // move and scale cloud bounds to canvas
+  // bounds = [{x0, y0}, {x1, y1}]
+  bWidth = bounds[1].x - bounds[0].x;
+  bHeight = bounds[1].y - bounds[0].y;
+  bMidX = bounds[0].x + bWidth / 2;
+  bMidY = bounds[0].y + bHeight / 2;
+  bDeltaX = cWidth / 2 - bounds[0].x + bWidth / 2;
+  bDeltaY = cHeight / 2 - bounds[0].y + bHeight / 2;
+  bScale = bounds ? Math.min(cWidth / bWidth, cHeight / bHeight) : 1;
 
-  const svg = d3
-    .create("svg")
-    .attr("viewBox", [0, 0, width, height])
-    .attr("width", width)
-    .attr("font-family", fontFamily)
-    .attr("text-anchor", "middle")
-    .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+  // the library's bounds seem not to correspond to reality?
+  // try using .getBBox() instead?
 
-  const g = svg
+  svg = d3
+    .select(".cloud")
+    .select("svg")
+    .append("svg")
+    .attr("width", cWidth)
+    .attr("height", cHeight);
+
+  wCloud = svg
     .append("g")
-    .attr("transform", `translate(${marginLeft},${marginTop})`);
-
-  const cloud = d3Cloud()
-    .size([width - marginLeft - marginRight, height - marginTop - marginBottom])
-    .words(data)
-    .padding(padding)
-    .rotate(rotate)
-    .font(fontFamily)
-    .fontSize((d) => Math.sqrt(d.size) * fontScale)
-    .on("word", ({ size, x, y, rotate, text }) => {
-      g.append("text")
-        .datum(text)
-        .attr("font-size", size)
-        .attr("fill", fill)
-        .attr("transform", `translate(${x},${y}) rotate(${rotate})`)
-        .text(text);
+    //.attr("transform", "translate(" + [bDeltaX, bDeltaY] + ") scale(" + 1 + ")") // nah!
+    .attr(
+      "transform",
+      "translate(" + [bWidth >> 1, bHeight >> 1] + ") scale(" + bScale + ")",
+    ) // nah!
+    .selectAll("text")
+    .data(words)
+    .enter()
+    .append("text")
+    .style("font-size", function (d) {
+      return d.size + "px";
+    })
+    .style("font-family", "Arial")
+    .style("fill", function (d, i) {
+      return d3.scale.category20(i);
+    })
+    .attr("text-anchor", "middle")
+    .transition()
+    .duration(500)
+    .attr("transform", function (d) {
+      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+    })
+    .text(function (d) {
+      return d.text;
     });
 
-  cloud.start();
-  invalidation && invalidation.then(() => cloud.stop());
-  return svg.node();
+  // TO DO: function to find min and max x,y of all words
+  // and use it as the group's bbox
+  // then do the transformation
+  bbox = wCloud.node(0).getBBox();
+  //ctm = wCloud.node().getCTM();
+  console.log(
+    "bbox (x: " +
+      bbox.x +
+      ", y: " +
+      bbox.y +
+      ", w: " +
+      bbox.width +
+      ", h: " +
+      bbox.height +
+      ")",
+  );
 }
