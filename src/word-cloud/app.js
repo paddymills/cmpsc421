@@ -32,118 +32,79 @@ async function fetchWordCloudData(term) {
   }
 }
 
+// did not find how to use D3.js to create a word cloud except from
+// https://d3-graph-gallery.com/graph/wordcloud_size.html
 async function generateWordCloud(term) {
-  const data = await fetchWordCloudData(term);
-  if (data) {
-    // Generate word cloud using data
-    console.log(data);
+  // List of words
+  var myWords = await fetchWordCloudData(term);
+  const mult =
+    myWords.length > 0 ? 80 / Math.max(...myWords.map((w) => w.score)) : 1;
+  myWords = myWords.map((word) => ({
+    word: word.word,
+    size: word.score * mult,
+  }));
+  console.log(myWords);
 
-    const width = 800;
-    const height = 600;
+  // set the dimensions and margins of the graph
+  var margin = { top: 10, right: 10, bottom: 10, left: 10 },
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
 
-    const words = data.map((d) => ({ text: d.word, size: d.score }));
+  d3.select("#cloud").select("svg").remove();
 
-    var cTemp = document.createElement("canvas"),
-      ctx = cTemp.getContext("2d");
-    ctx.font = "100px sans-serif";
-    var fRatio = Math.min(width, height) / ctx.measureText(words[0].text).width,
-      fontScale = d3.scale
-        .linear()
-        .domain([
-          d3.min(words, function (d) {
-            return d.size;
-          }),
-          d3.max(words, function (d) {
-            return d.size;
-          }),
-        ])
-        //.range([20,120]),
-        .range([20, (100 * fRatio) / 2]), // tbc
-      fill = d3.scale.category20();
-
-    d3.layout
-      .cloud()
-      .size([width, height])
-      .words(data.map((d) => ({ text: d.word, size: d.score })))
-      //.padding(2) // controls
-      .rotate(function () {
-        return ~~(Math.random() * 2) * 90;
-      })
-      .font("sans-serif")
-      .fontSize(function (d) {
-        return fontScale(d.size);
-      })
-      .on("end", draw)
-      .start();
-  }
-}
-
-function draw(words, bounds) {
-  cWidth = 800;
-  cHeight = 600;
-
-  // move and scale cloud bounds to canvas
-  // bounds = [{x0, y0}, {x1, y1}]
-  bWidth = bounds[1].x - bounds[0].x;
-  bHeight = bounds[1].y - bounds[0].y;
-  bMidX = bounds[0].x + bWidth / 2;
-  bMidY = bounds[0].y + bHeight / 2;
-  bDeltaX = cWidth / 2 - bounds[0].x + bWidth / 2;
-  bDeltaY = cHeight / 2 - bounds[0].y + bHeight / 2;
-  bScale = bounds ? Math.min(cWidth / bWidth, cHeight / bHeight) : 1;
-
-  // the library's bounds seem not to correspond to reality?
-  // try using .getBBox() instead?
-
-  svg = d3
-    .select(".cloud")
-    .select("svg")
+  // append the svg object to the body of the page
+  var svg = d3
+    .select("#cloud")
     .append("svg")
-    .attr("width", cWidth)
-    .attr("height", cHeight);
-
-  wCloud = svg
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    //.attr("transform", "translate(" + [bDeltaX, bDeltaY] + ") scale(" + 1 + ")") // nah!
-    .attr(
-      "transform",
-      "translate(" + [bWidth >> 1, bHeight >> 1] + ") scale(" + bScale + ")",
-    ) // nah!
-    .selectAll("text")
-    .data(words)
-    .enter()
-    .append("text")
-    .style("font-size", function (d) {
-      return d.size + "px";
-    })
-    .style("font-family", "Arial")
-    .style("fill", function (d, i) {
-      return d3.scale.category20(i);
-    })
-    .attr("text-anchor", "middle")
-    .transition()
-    .duration(500)
-    .attr("transform", function (d) {
-      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-    })
-    .text(function (d) {
-      return d.text;
-    });
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // TO DO: function to find min and max x,y of all words
-  // and use it as the group's bbox
-  // then do the transformation
-  bbox = wCloud.node(0).getBBox();
-  //ctm = wCloud.node().getCTM();
-  console.log(
-    "bbox (x: " +
-      bbox.x +
-      ", y: " +
-      bbox.y +
-      ", w: " +
-      bbox.width +
-      ", h: " +
-      bbox.height +
-      ")",
-  );
+  // Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+  // Wordcloud features that are different from one word to the other must be here
+  var layout = d3.layout
+    .cloud()
+    .size([width, height])
+    .words(
+      myWords.map(function (d) {
+        return { text: d.word, size: d.size };
+      }),
+    )
+    .padding(5) //space between words
+    .rotate(function () {
+      return ~~(Math.random() * 2) * 90;
+    })
+    .fontSize(function (d) {
+      return d.size;
+    }) // font size of words
+    .on("end", draw);
+  layout.start();
+
+  // This function takes the output of 'layout' above and draw the words
+  // Wordcloud features that are THE SAME from one word to the other can be here
+  function draw(words) {
+    svg
+      .append("g")
+      .attr(
+        "transform",
+        "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")",
+      )
+      .selectAll("text")
+      .data(words)
+      .enter()
+      .append("text")
+      .style("font-size", function (d) {
+        return d.size;
+      })
+      .style("fill", "#69b3a2")
+      .attr("text-anchor", "middle")
+      .style("font-family", "Impact")
+      .attr("transform", function (d) {
+        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+      })
+      .text(function (d) {
+        return d.text;
+      });
+  }
 }
