@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <p>Two-way binding</p>
+
+    <label for="name">Name: </label>
+    <input type="text" id="name" v-model="name">
+    <!--    <input type="text" id="name" @input="event => name = event.target.value" v-bind:value="name">-->
+
+    <label for="age">Age: </label>
+    <input type="text" id="age" v-model="age">
+    <!--    <input type="text" id="age" @input="event => age = event.target.value" v-bind:value="age">-->
+
+    <button @click="setDefaults">Set default values</button>
+
+</div>
+
+
+<!--<script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>-->
+<script src="vue.global.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

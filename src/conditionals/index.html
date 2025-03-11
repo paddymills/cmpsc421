@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <h1>conditionals</h1>
+    <button @click="error = !error">Toggle Error</button>
+    <button @click="success = !success">Toggle Success</button>
+
+    <p>error: {{error}}</p>
+    <p>success: {{success}}</p>
+
+    <h6>first example (linked, if, else-if)</h6>
+    <p v-if="error">Here is an error</p>
+    <p v-else-if="success">Here is a success</p>
+
+    <h6>second example</h6>
+    <p v-if="error">Here is an error</p>
+    <p v-if="success">Here is a success</p>
+
+    <h6>third approach</h6>
+    <p v-show="error">Here is an error</p>
+    <p v-show="success">Here is a success</p>
+
+</div>
+
+<!--<script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>-->
+<script src="vue.global.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <p>One way data binding</p>
+    <p>name: {{name}}</p>
+    <p>job: {{job}}</p>
+    <p>Our website: {{website}}</p>
+<!--    {{websiteTag}}-->
+
+<!--    binding-->
+    <p><a v-bind:href="website">Our Website</a></p>
+    <p v-html="websiteTag"></p>
+    <input type="text" v-bind:value="name">
+
+</div>
+
+<!--<script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>-->
+<script src="vue.global.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

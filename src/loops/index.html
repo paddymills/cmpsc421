@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <h2>List of movies</h2>
+    <ul>
+        <li v-for="movie in movies">{{movie}}</li>
+    </ul>
+
+    <h2>list of actors</h2>
+    <ul>
+        <li v-for="(actor, index) in actors">{{actor.name}} - {{actor.activity}} found at position {{index}}</li>
+    </ul>
+
+    <h2>another way</h2>
+    <template v-for="actor in actors">
+        <div v-for="(val, key) in actor">
+            <p>position: {{key}} - value: {{val}}</p>
+        </div>
+    </template>
+
+</div>
+
+<!--<script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>-->
+<script src="vue.global.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
