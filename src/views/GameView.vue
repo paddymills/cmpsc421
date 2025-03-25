@@ -3,7 +3,5 @@ import Game from '../components/Game.vue'
 </script>
 
 <template>
-  <main>
-    <Game />
-  </main>
+  <Game />
 </template>

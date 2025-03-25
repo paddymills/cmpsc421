@@ -3,11 +3,9 @@
 </script>
 
 <template>
-  <main>
-    <h1>Welcome to the Game!</h1>
-    <a href="/game">Start Game</a>
-    <a href="/scores">Scores</a>
-  </main>
+  <h1>Welcome to the Game!</h1>
+  <a href="/game">Start Game</a>
+  <a href="/scores">Scores</a>
 </template>
 
 <style scoped>
