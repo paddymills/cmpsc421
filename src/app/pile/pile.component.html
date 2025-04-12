@@ -1,4 +1,7 @@
 <div class="game-pile">
-  <p>{{ name() }}</p>
-  <app-card />
+  @if (cards().length > 0) {
+    <app-card [card]="topCard()" />
+  } @else {
+    <div class="empty-pile"></div>
+  }
 </div>

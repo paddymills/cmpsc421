@@ -1,5 +1,5 @@
-import { Component, input, output } from "@angular/core";
-import { CardComponent, CardType, CardFace } from "../card/card.component";
+import { Component, input, computed } from "@angular/core";
+import { CardComponent, Card } from "../card/card.component";
 
 enum PileType {
   Deck = 1,
@@ -15,7 +15,12 @@ enum PileType {
   styleUrl: "./pile.component.css",
 })
 export class PileComponent {
-  name = input<string>("new pile");
-  type = input<CardType>(CardType.Four);
-  face = input<CardFace>(CardFace.Diamonds);
+  cards = input<Card[]>([]);
+  get topCard(): Card | null {
+    if (this.cards().length === 0) {
+      return null;
+    }
+
+    return this.cards()[this.cards().length - 1];
+  }
 }

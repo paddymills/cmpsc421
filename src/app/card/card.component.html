@@ -1,1 +1,5 @@
-<img [src]="asset" [alt]="name" />
+@if (card()) {
+  <img [src]="asset" [alt]="name" cdkDrag />
+} @else {
+  <div class="card-placeholder">No card selected</div>
+}
