@@ -11,7 +11,7 @@ export class Deck extends Array<Card> {
     let index = 0;
     for (const type of types) {
       for (const face of faces) {
-        this[index] = { type, face };
+        this[index] = { type, face, visible: false };
         index++;
       }
     }
@@ -23,7 +23,22 @@ export class Deck extends Array<Card> {
     }
   }
 
-  drawCard(): Card | null {
-    return this.pop() || null;
+  drawCard(): Card {
+    let card = this.pop();
+
+    if (card) {
+      return card;
+    } else {
+      throw new Error("Failed to draw card");
+    }
+  }
+
+  fromWaste(waste: Array<Card>) {
+    while (waste.length > 0) {
+      let card = waste.pop();
+      if (card) {
+        this.push({ ...card, visible: false });
+      }
+    }
   }
 }

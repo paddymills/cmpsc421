@@ -1,7 +1,7 @@
-<div class="game-pile">
-  @if (cards().length > 0) {
-    <app-card [card]="topCard()" />
-  } @else {
+<div class="game-pile" cdkDropList (cdkDropListDropped)="dropCard($event)">
+  @for (card of cardsToRender; track $index) {
+    <app-card [card]="card" (dblclick)="doubleClickHandler($index)" />
+  } @empty {
     <div class="empty-pile"></div>
   }
 </div>

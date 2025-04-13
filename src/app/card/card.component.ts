@@ -9,12 +9,8 @@ import { CdkDrag } from "@angular/cdk/drag-drop";
   imports: [CdkDrag],
 })
 class CardComponent {
-  card = input<Card | null>(null);
-  next = input<Card | null>(null);
-
-  constructor() {
-    console.log(this.card());
-  }
+  card = input.required<Card>();
+  // next = input<Card | null>(null);
 
   get asset(): string {
     return `cards/${this.card()?.type}_of_${this.card()?.face}.png`;
@@ -22,6 +18,10 @@ class CardComponent {
 
   get name(): string {
     return `${this.card()?.type} of ${this.card()?.face}`;
+  }
+
+  get show(): boolean {
+    return this.card().visible;
   }
 }
 

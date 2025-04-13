@@ -1,3 +1,30 @@
 .game-pile {
-  justify-content: center;
+  height: 100%;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+game-foundation-pile > app-card {
+  position: absolute;
+  top: 0px;
+}
+
+.game-pile > :not(:last-child) {
+  height: 30px;
+  overflow: hidden;
+}
+
+.empty-pile {
+  text-align: center;
+  margin: 0;
+  height: 100%;
+
+  background-color: #f5f5f5;
+  border: 5px dashed #ccc;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #999;
 }

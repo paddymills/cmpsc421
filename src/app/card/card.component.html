@@ -1,5 +1,5 @@
-@if (card()) {
-  <img [src]="asset" [alt]="name" cdkDrag />
+@if (card().visible) {
+  <img [src]="asset" [alt]="name" cdkDrag [cdkDragData]="card()" />
 } @else {
-  <div class="card-placeholder">No card selected</div>
+  <div class="card-back"></div>
 }
