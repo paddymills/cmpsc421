@@ -22,10 +22,13 @@
 }
 
 .ttt {
+    /* 3 x 3 grid */
     grid-template-columns: repeat(3, 1fr);
 }
 .snake {
-    grid-template-columns: repeat(10, 1fr);
+    /* 20c x 10r grid */
+    grid-template-columns: repeat(20, 1fr);
+    gap: 1px 1px;
 }
 
 .ttt > div:first-child,
@@ -34,12 +37,12 @@
 }
 
 .ttt > div:nth-child(3),
-.snake > div:nth-child(10) {
+.snake > div:nth-child(20) {
     border-top-right-radius: 10px;
 }
 
 .ttt > div:nth-child(7),
-.snake > div:nth-child(51) {
+.snake > div:nth-child(201) {
     border-bottom-left-radius: 10px;
 }
 
@@ -56,4 +59,14 @@
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+}
+
+.snake-cell {
+    height: 50px;
+    width: 50px;
+    background: #345830;
+}
+
+.snake-body {
+    background: #345830;
 }
