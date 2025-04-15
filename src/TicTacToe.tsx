@@ -80,6 +80,7 @@ export function TicTacToeGame() {
             </div>
           ))}
         </div>
+        <p>Player {player === Player.One ? 1 : 2} turn</p>
       </div>
       <Modal open={modalText !== null} onClose={() => setModalText(null)}>
         <ModalDialog>
