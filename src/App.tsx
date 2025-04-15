@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Button, ToggleButtonGroup } from "@mui/joy";
 import { TicTacToeGame } from "./TicTacToe";
 import { SnakeGame } from "./Snake";
 
 function App() {
-  const [game, setGame] = useState<string>("TicTacToe");
+  const [game, setGame] = useState<string>(
+    localStorage.getItem("game") || "TicTacToe",
+  );
+
+  useEffect(() => {
+    localStorage.setItem("game", game);
+  }, [game]);
 
   let gameBoard;
   if (game === "TicTacToe") {
