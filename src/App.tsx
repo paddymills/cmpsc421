@@ -17,6 +17,8 @@ function App() {
   return (
     <>
       <ToggleButtonGroup
+        color="primary"
+        variant="soft"
         value={game}
         onChange={(_event, newValue) => setGame(newValue || game)}
       >
