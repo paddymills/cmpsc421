@@ -62,11 +62,16 @@
 }
 
 .snake-cell {
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     background: #345830;
 }
 
 .snake-body {
-    background: #345830;
+    background: #1a1f16;
+}
+
+.snake-food {
+    background: #dd1c1a;
+    border-radius: 2px;
 }
