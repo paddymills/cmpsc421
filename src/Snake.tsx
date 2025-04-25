@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Button, Modal, ModalDialog, ModalClose, Typography } from "@mui/joy";
 
 // movements per second
-const SPEED = 2;
+const SPEED = 4;
 
 type Loc = {
   row: number;
@@ -87,6 +87,8 @@ export function SnakeGame() {
         case "l":
           turn(Direction.RIGHT);
           break;
+        default:
+          console.log(`Unexpected key: ${event.key}`);
       }
     },
     [direction],
@@ -146,15 +148,25 @@ export function SnakeGame() {
       newSnake.pop();
     }
 
+    // head occurences (for testing a crash into snake)
+    const head = newSnake[0];
+    const collision = newSnake
+      .slice(1)
+      .some((cell) => cell.row === head.row && cell.col === head.col);
+
     // check for game over
-    if (
+    if (collision) {
+      setPlaying(false);
+      setModalText("Game Over. You ran into yourself.");
+      return;
+    } else if (
       newSnake[0].row < 0 ||
       newSnake[0].row >= 10 ||
       newSnake[0].col < 0 ||
       newSnake[0].col >= 20
     ) {
       setPlaying(false);
-      setModalText("Game Over");
+      setModalText("Game Over. You hit a wall.");
       return;
     }
 
@@ -175,10 +187,21 @@ export function SnakeGame() {
     <>
       <div className="game">
         <Button onClick={restart}>Restart</Button>
+        <h4>Score: {snake.length - 3}</h4>
         <div className="board snake">
           {board().map((cell, index) => (
             <div key={index} className={cell}></div>
           ))}
+        </div>
+        <div>
+          <p>Try not to run into the wall or yourself</p>
+          <p>Red blocks are food</p>
+          <p>Movement is</p>
+          <ul>
+            <li>Arrow Keys</li>
+            <li>WASD</li>
+            <li>HJKL (vim)</li>
+          </ul>
         </div>
       </div>
       <Modal open={modalText !== null} onClose={() => setModalText(null)}>
