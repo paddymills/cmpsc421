@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Modal, ModalDialog, ModalClose, Typography } from "@mui/joy";
+import "./TicTacToe.css";
+import { Cell } from "./Cell";
 
 const wins: number[][] = [
   // rows
@@ -40,8 +42,9 @@ export function TicTacToeGame() {
         .reduce((acc, val) => (acc && acc === val ? acc : null));
       // if all row values in row are equal and not null
       if (rowPlayer) {
-        console.log(`Player ${rowPlayer} wins!`);
-        setModalText(`Player ${rowPlayer} wins!`);
+        setModalText(
+          `Player ${rowPlayer === Player.One ? "One" : "Two"} wins!`,
+        );
 
         // stop game
         setPlaying(false);
@@ -72,15 +75,15 @@ export function TicTacToeGame() {
   return (
     <>
       <div className="game">
-        <Button onClick={restart}>Restart</Button>
+        <p>Player {player === Player.One ? 1 : 2} turn</p>
         <div className="board ttt">
           {board.map((cell, index) => (
-            <div key={index} className="ttt-cell" onClick={() => turn(index)}>
+            <Cell key={index} index={index} onClick={() => turn(index)}>
               {cell}
-            </div>
+            </Cell>
           ))}
         </div>
-        <p>Player {player === Player.One ? 1 : 2} turn</p>
+        <Button onClick={restart}>Restart</Button>
       </div>
       <Modal open={modalText !== null} onClose={() => setModalText(null)}>
         <ModalDialog>

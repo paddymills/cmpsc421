@@ -1,0 +1,36 @@
+.snake {
+    /* 20c x 10r grid */
+    grid-template-columns: repeat(20, 1fr);
+    gap: 1px 1px;
+}
+
+.snake-cell {
+    height: 30px;
+    width: 30px;
+    background: #345830;
+}
+
+.snake-body {
+    background: #1a1f16;
+}
+
+.snake-food {
+    background: #dd1c1a;
+    border-radius: 2px;
+}
+
+.snake > div:first-child {
+    border-top-left-radius: 10px;
+}
+
+.snake > div:nth-child(20) {
+    border-top-right-radius: 10px;
+}
+
+.snake > div:nth-child(181) {
+    border-bottom-left-radius: 10px;
+}
+
+.snake > div:last-child {
+    border-bottom-right-radius: 10px;
+}

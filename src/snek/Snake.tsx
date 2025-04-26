@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button, Modal, ModalDialog, ModalClose, Typography } from "@mui/joy";
+import "./Snake.css";
 
 // movements per second
 const SPEED = 4;
