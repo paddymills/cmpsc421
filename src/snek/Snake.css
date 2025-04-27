@@ -4,19 +4,9 @@
     gap: 1px 1px;
 }
 
-.snake-cell {
+.snake > div {
     height: 30px;
     width: 30px;
-    background: #345830;
-}
-
-.snake-body {
-    background: #1a1f16;
-}
-
-.snake-food {
-    background: #dd1c1a;
-    border-radius: 2px;
 }
 
 .snake > div:first-child {
@@ -27,7 +17,7 @@
     border-top-right-radius: 10px;
 }
 
-.snake > div:nth-child(181) {
+.snake > div:nth-last-child(20) {
     border-bottom-left-radius: 10px;
 }
 

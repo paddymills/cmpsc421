@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button, Modal, ModalDialog, ModalClose, Typography } from "@mui/joy";
 import "./Snake.css";
-
+import { Instructions } from "./Instructions";
+import { Cell, GameCell } from "./Cell";
+import { Score } from "./Score";
 // movements per second
 const SPEED = 4;
 
@@ -42,11 +44,11 @@ export function SnakeGame() {
   const [food, setFood] = useState<Loc>({ row: 5, col: 10 });
 
   const board = () => {
-    const board = Array(10 * 20).fill("snake-cell");
+    const board = Array(10 * 20).fill(GameCell.Empty);
     snake.forEach((loc) => {
-      board[loc.row * 20 + loc.col] = "snake-body";
+      board[loc.row * 20 + loc.col] = GameCell.Snake;
     });
-    board[food.row * 20 + food.col] = "snake-food";
+    board[food.row * 20 + food.col] = GameCell.Food;
 
     return board;
   };
@@ -187,23 +189,14 @@ export function SnakeGame() {
   return (
     <>
       <div className="game">
-        <Button onClick={restart}>Restart</Button>
-        <h4>Score: {snake.length - 3}</h4>
+        <Score score={snake.length - 3} />
         <div className="board snake">
           {board().map((cell, index) => (
-            <div key={index} className={cell}></div>
+            <Cell key={index} value={cell} />
           ))}
         </div>
-        <div>
-          <p>Try not to run into the wall or yourself</p>
-          <p>Red blocks are food</p>
-          <p>Movement is</p>
-          <ul>
-            <li>Arrow Keys</li>
-            <li>WASD</li>
-            <li>HJKL (vim)</li>
-          </ul>
-        </div>
+        <Instructions />
+        <Button onClick={restart}>Restart</Button>
       </div>
       <Modal open={modalText !== null} onClose={() => setModalText(null)}>
         <ModalDialog>
