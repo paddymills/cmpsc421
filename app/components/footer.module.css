@@ -1,0 +1,12 @@
+.footer {
+    flex-shrink: 0;
+    padding: 0.25rem;
+    text-align: end;
+
+    background-color: #333;
+    color: #fff;
+}
+
+.footer p {
+    margin: 0.25rem;
+}
