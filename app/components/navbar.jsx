@@ -7,12 +7,6 @@ function Navbar() {
       <Link className={styles.page} href="/">
         Home
       </Link>
-      <Link className={styles.page} href="/monsters">
-        Monsters
-      </Link>
-      <Link className={styles.page} href="/nothing">
-        Nothing
-      </Link>
     </nav>
   );
 }

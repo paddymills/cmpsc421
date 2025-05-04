@@ -1,0 +1,29 @@
+.list {
+    list-style-type: none;
+    padding: 1rem;
+    border: 0.25rem solid #fff;
+    border-radius: 2rem;
+    height: 60vh;
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+.item {
+    margin: 1rem 0;
+}
+
+.link {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.link:hover {
+    color: cadetblue;
+}
