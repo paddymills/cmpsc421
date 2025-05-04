@@ -1,18 +1,19 @@
 import Link from "next/link";
-import styles from "./page.module.css";
+import styles from "./index.module.css";
 
 const pokeApi = "https://pokeapi.co/api/v2/pokemon";
 const perFetch = 10000;
 const pageNum = 0;
 
-async function getData() {
+export async function getStaticProps() {
   const url = `${pokeApi}?limit=${perFetch}&offset=${pageNum}`;
-  const data = await fetch(url);
-  return data.json();
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return { props: { data } };
 }
 
-const Home = async () => {
-  const data = await getData();
+export default function Home({ data }) {
   const links = data.results.map((poke, index) => (
     <li className={styles.item} key={index}>
       <Link
@@ -30,6 +31,4 @@ const Home = async () => {
       <ul className={styles.list}>{links}</ul>
     </>
   );
-};
-
-export default Home;
+}
